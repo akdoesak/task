@@ -68,12 +68,12 @@ public class XMLFileProcessor extends FileProcessor {
     private String transformXMLToString(Document doc) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-        StringWriter writer = new StringWriter();
-        transformer.transform(new DOMSource(doc), new StreamResult(writer));
-
-        return writer.toString();
+        StreamResult result = new StreamResult(new java.io.StringWriter());
+        transformer.transform(new DOMSource(doc), result);
+        return result.getWriter().toString();
     }
-
 }

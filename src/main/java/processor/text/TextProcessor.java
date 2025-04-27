@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public class TextProcessor {
     private static final Pattern WORD_SPLIT = Pattern.compile("[,\\s]+");
-    private static final Pattern ABBREVIATION_PATTERN = Pattern.compile("^[A-Za-z]{1,3}\\.$");
 
     //Can be provided as a file parameter which can be updated.
     private static final Set<String> ABBREVIATIONS = Set.of(
@@ -67,7 +66,7 @@ public class TextProcessor {
         }
 
         private boolean isAbbreviation(String word) {
-            return ABBREVIATION_PATTERN.matcher(word).matches();
+            return ABBREVIATIONS.contains(word);
         }
 
         private List<String> splitWords(String sentence) {
